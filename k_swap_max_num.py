@@ -54,9 +54,9 @@ class number_swaps:
                 for k in range(0,l):
                     if indexes_copy[k]<=i:
                         continue
-                    elif(num_swaps+indexes[k]-i-1)<=k_swaps: #checking that the swap is less than max allowed swaps
+                    elif(num_swaps+indexes[k]-i)<=k_swaps: #checking that the swap is less than max allowed swaps
                         max_num = max_num[0:i]+str(l_keys[j])+max_num[i+1:indexes[k]]+str(digit)+max_num[indexes[k]+1:]
-                        num_swaps = num_swaps + indexes[k] - i - 1
+                        num_swaps = num_swaps + indexes[k] - i
                         val = ind_dic.get(digit)
                         val.remove(i)
                         val.append(indexes[k])
@@ -72,9 +72,15 @@ class number_swaps:
 
 ns = number_swaps()
 
-print("Orginal Number : ", 9825462363467666912689362389632896438968961238963896238969)
-print("Maximum number for 50 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 50))
-print("Maximum number for 60 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 60))
-print("Maximum number for 70 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 70))
-print("Maximum number for 80 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 80))
-print("Maximum number for 90 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 90))
+# print("Orginal Number : ", 9825462363467666912689362389632896438968961238963896238969)
+# print("Maximum number for 50 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 50))
+# print("Maximum number for 60 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 60))
+# print("Maximum number for 70 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 70))
+# print("Maximum number for 80 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 80))
+# print("Maximum number for 90 swaps ",ns.find_max(9825462363467666912689362389632896438968961238963896238969, 90))
+print("Orginal Number : ", 98259999)
+print("Maximum number for 1 swaps ",ns.find_max(98259999, 1))
+print("Maximum number for 2 swaps ",ns.find_max(98259999, 2))
+print("Maximum number for 3 swaps ",ns.find_max(98259999, 3))
+print("Maximum number for 4 swaps ",ns.find_max(98259999, 4))
+print("Maximum number for 5 swaps ",ns.find_max(98259999, 5))
