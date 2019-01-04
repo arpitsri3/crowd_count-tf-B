@@ -1,16 +1,23 @@
-fps = feed_vid.get(cv2.CAP_PROP_FPS)
+from EmoPy.src.fermodel import FERModel
 
-fps = np.int32(fps)
+from pkg_resources import resource_filename
 
-print("Frames Per Second:",fps,"\n")
+import cv2
 
 counter = 0
 
 cap = cv2.VideoCapture("./test5.mp4")
 
+fps = cap.get(cv2.CAP_PROP_FPS)
+
+fps = np.int32(fps)
+
+print("Frames Per Second:",fps,"\n")
+
 ret, frame = cap.read()
+
 emotion ="" 
-print(frame.shape, " " ,ret)
+
 
 # cap = cv2.VideoCapture("./test5.mp4")
 # ret, frame = cap.read()
