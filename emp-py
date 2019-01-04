@@ -1,0 +1,69 @@
+from EmoPy.src.fermodel import FERModel
+from pkg_resources import resource_filename
+import cv2
+from flask import Flask, request, Response
+from flask_restful import Resource, Api
+from flask_cors import CORS
+import cv2
+import numpy
+
+target_emotions = ["calm", "happiness", "anger"]
+model = FERModel(target_emotions, verbose=True)
+font = cv2.FONT_HERSHEY_SIMPLEX
+print('Predicting on happy image...')
+model.predict(resource_filename('EmoPy.examples','image_data/sample_happy_image.png'))
+
+print('Predicting on disgust image...')
+model.predict(resource_filename('EmoPy.examples','image_data/sample_disgust_image.png'))
+
+print('Predicting on anger image...')
+model.predict(resource_filename('EmoPy.examples','image_data/sample_anger_image2.png'))
+
+
+app = Flask(__name__)
+CORS(app)
+api = Api(app)
+
+class image_api(Resource):
+    def process_image(self, img):
+        global model
+        cv2.imwrite("test.jpg",img)
+        emotion = model.predict("test.jpg")
+
+        return emotion
+
+    def import_data(self):
+        #img = request.files['File']
+        #read image file string data
+        filestr = request.files['File'].read()
+        #convert string data to numpy array
+        npimg = numpy.fromstring(filestr, numpy.uint8)
+        # convert numpy array to image
+        img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
+        #print(img)
+        em = self.process_image(img)
+        # print(em)
+        return ({"Dominant Emotion":str(em)})
+
+    def post(self):
+        return self.import_data()
+
+api.add_resource(image_api, '/emotionDetect')
+if __name__ == '__main__':
+     app.run(port = '5003', host='0.0.0.0')
+
+# cap = cv2.VideoCapture("./test5.mp4")
+# ret, frame = cap.read()
+# print(frame.shape, " " ,ret)
+# while ret:
+#     cv2.imwrite("test.jpg",frame)
+#     emotion = model.predict("test.jpg")
+#     cv2.putText(frame, emotion, (15, 15), font, 0.5, (255, 0, 0), 2, cv2.LINE_AA)
+#     cv2.imshow("Output",frame)
+
+#     if cv2.waitKey(5) == 27:
+#         break
+#     ret, frame = cap.read()
+
+# cv2.destroyAllWindows()
+# cap.release()
